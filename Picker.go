@@ -12,7 +12,7 @@ var wg sync.WaitGroup
 
 func main() {
   runtime.GOMAXPROCS(2)
-  wg.Add(2)
+  wg.Add(1)
   var mode, numTables, total, tries, avg int = 0, 0, 0, 0, 0
   fmt.Println("\n\tGame modes:")
   fmt.Println("1: Pick a random table")
@@ -26,35 +26,29 @@ func main() {
     fmt.Scanf("%d", &numTables)
     fmt.Print("How many times would you like to run the experiment: ")
     fmt.Scanf("%d", &tries)
-    done := make(chan bool)
-    go calc(done)
-    go printAvg(numTables, total, avg, tries, done)
+    fmt.Println("\n")
+    go calc()
+    go printAvg(numTables, total, avg, tries, )
     wg.Wait()
   } else {
     fmt.Println("Goodbye!")
   }
 }
 
-func printAvg(numTables int, total int, avg int, tries int, done chan<- bool) {
+func printAvg(numTables int, total int, avg int, tries int) {
   defer wg.Done()
   for i := 1; i <= tries; i++ {
     total += avgFinder(numTables)
   }
-  close(done)
   avg = total/tries
-  fmt.Println("\nThe avg tries it took to solve", numTables, "tables was", avg)
+  fmt.Printf("\rThe avg tries it took to solve %v tables was %v\n\n", numTables, avg)
 }
 
-func calc(done <-chan bool) {
-  defer wg.Done()
+func calc() {
   for {
     for i := "Calculating";; i += "." {
       fmt.Printf("\r%s", i)
       time.Sleep(500 * time.Millisecond)
-    }
-    select {
-      case _ = <- done:
-        return
     }
   }
 }
@@ -63,7 +57,7 @@ func printWelcome() {
   welcome := []string{"\nWelcome to Colin's Random Table Picker", "Tables are eliminated when number is drawn,", "And put back in the game when their number is drawn again.", "Last number left wins!", "Good Luck.\n"}
   for _, item := range welcome {
     fmt.Println(item)
-    time.Sleep(1000 * time.Millisecond)
+    time.Sleep(900 * time.Millisecond)
   }
 }
 
