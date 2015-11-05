@@ -7,6 +7,7 @@ import (
     "strconv"
     "runtime"
     "sync"
+    "log"
 )
 var wg sync.WaitGroup
 
@@ -14,22 +15,25 @@ func main() {
   runtime.GOMAXPROCS(2)
   wg.Add(1)
   var mode, numTables, total, tries, avg int = 0, 0, 0, 0, 0
-  fmt.Println("\n\tGame modes:")
-  fmt.Println("1: Pick a random table")
-  fmt.Println("2: Find the avg tries it takes to solve a puzzle\n")
-  fmt.Println("Please choose 1 or 2: ")
+  fmt.Println("\n\tGame modes:\n1: Pick a random table\n2: Find the avg tries it takes to solve a puzzle\n\nPlease choose 1 or 2: ")
   fmt.Scanf("%d", &mode)
   fmt.Println("\n")
   if mode == 1 {
     picker()
   } else if mode == 2 {
     fmt.Print("How many tables would you like to calculate for: ")
-    fmt.Scanf("%d", &numTables)
+    _, err := fmt.Scanf("%d", &numTables)
+    if err != nil {
+      log.Fatal(err)
+    }
     fmt.Print("How many times would you like to run the experiment: ")
-    fmt.Scanf("%d", &tries)
+    _, err2 := fmt.Scanf("%d", &tries)
+    if err2 != nil {
+      log.Fatal(err2)
+    }
     fmt.Println("\n")
     go calc()
-    go printAvg(numTables, total, avg, tries, )
+    go printAvg(numTables, total, avg, tries)
     wg.Wait()
   } else {
     fmt.Println("Goodbye!")
@@ -58,31 +62,35 @@ func printWelcome() {
   welcome := []string{"\nWelcome to Colin's Random Table Picker", "Tables are eliminated when number is drawn,", "And put back in the game when their number is drawn again.", "Last number left wins!", "Good Luck.\n"}
   for _, item := range welcome {
     fmt.Println(item)
-    time.Sleep(500 * time.Millisecond)
+    time.Sleep(400 * time.Millisecond)
   }
 }
 
 func picker() {
   var tables, comp, wait int
-  var cont bool = false
-  var end bool = false
   var compString string
   printWelcome()
-  for cont == false {
+  for {
     fmt.Print("How many tables are playing: ")
-    fmt.Scanf("%d", &tables)
+    _, err := fmt.Scanf("%d", &tables)
+    if err != nil {
+      log.Fatal(err)
+    }
     fmt.Print("How many ms would you like to wait between each iteration: ")
-    fmt.Scanf("%d", &wait)
+    _, err2 := fmt.Scanf("%d", &wait)
+    if err2 != nil {
+      log.Fatal(err2)
+    }
     if tables > 0 {
-      cont = true
+      break
     }
   }
-  tableArray := []string{}
-  for i := 1; i <= tables; i++ {
-    tableArray = append(tableArray, strconv.Itoa(i))
+  tableArray := make([]string, tables)
+  for i, _ := range tableArray {
+    tableArray[i] = strconv.Itoa(i + 1)
   }
   var total int = 0
-  for end == false {
+  for {
     r := rand.New(rand.NewSource(time.Now().UTC().UnixNano()))
     comp = r.Intn(tables) + 1;
     compString = strconv.Itoa(comp)
@@ -101,13 +109,13 @@ func picker() {
       }
     }
     if numX >= tables - 1 {
-      end = true
       for _, element := range tableArray {
         if element != "x" {
           fmt.Println("The lucky winner is", element, "chosen after", total, "rounds.\n")
           break
         }
       }
+      break
     }
     time.Sleep(time.Duration(wait) * time.Millisecond)
   }
@@ -115,13 +123,12 @@ func picker() {
 
 func avgFinder(tables int) int{
   var comp, total int = 0, 0
-  var end bool = false
   var compString string
-  tableArray := []string{}
-  for i := 1; i <= int(tables); i++ {
-    tableArray = append(tableArray, strconv.Itoa(i))
+  tableArray := make([]string, tables)
+  for i, _ := range tableArray {
+    tableArray[i] = strconv.Itoa(i + 1)
   }
-  for end == false {
+  for {
     r := rand.New(rand.NewSource(time.Now().UTC().UnixNano()))
     comp = r.Intn(tables) + 1;
     compString = strconv.Itoa(comp)
