@@ -8,51 +8,64 @@ import (
     "runtime"
     "sync"
     "log"
+
+    "github.com/fatih/color"
 )
 var wg sync.WaitGroup
 
+var re *color.Color = color.New(color.FgRed)
+var red *color.Color = re.Add(color.BgBlack)
+var boldRed *color.Color = red.Add(color.Bold)
+
 func main() {
+
   runtime.GOMAXPROCS(2)
   wg.Add(1)
-  var mode, numTables, total, tries, avg int = 0, 0, 0, 0, 0
-  fmt.Println("\n\tGame modes:\n1: Pick a random table\n2: Find the avg tries it takes to solve a puzzle\n\nPlease choose 1 or 2: ")
-  fmt.Scanf("%d", &mode)
-  fmt.Println("\n")
+
+  var mode, numTables, total, tries int = 0, 0, 0, 0
+  var avg float32 = 0
+  red.Println("\n\tGame modes:\n1: Pick a random table\n2: Find the avg tries it takes to solve a puzzle\n\nPlease choose 1 or 2: ")
+  _, err := fmt.Scanf("%d", &mode)
+  if err != nil {
+    log.Fatal(err)
+  }
+
   if mode == 1 {
     picker()
   } else if mode == 2 {
-    fmt.Print("How many tables would you like to calculate for: ")
-    _, err := fmt.Scanf("%d", &numTables)
-    if err != nil {
-      log.Fatal(err)
-    }
-    fmt.Print("How many times would you like to run the experiment: ")
-    _, err2 := fmt.Scanf("%d", &tries)
+    red.Print("How many tables would you like to calculate for: ")
+    _, err2 := fmt.Scanf("%d", &numTables)
     if err2 != nil {
       log.Fatal(err2)
+    }
+    red.Print("How many times would you like to run the experiment: ")
+    _, err3 := fmt.Scanf("%d", &tries)
+    if err3 != nil {
+      log.Fatal(err3)
     }
     fmt.Println("\n")
     go calc()
     go printAvg(numTables, total, avg, tries)
     wg.Wait()
   } else {
-    fmt.Println("Goodbye!")
+    red.Println("Goodbye!")
   }
 }
 
-func printAvg(numTables int, total int, avg int, tries int) {
+func printAvg(numTables int, total int, avg float32, tries int) {
   defer wg.Done()
   for i := 1; i <= tries; i++ {
     total += avgFinder(numTables)
   }
-  avg = total/tries
-  fmt.Printf("\rThe avg tries it took to solve %v tables was %v\n\n", numTables, avg)
+  //a := color.New(color.FgRed, color.Bold)
+  avg = float32(total)/float32(tries)
+  boldRed.Printf("\rThe avg tries it took to solve %v tables was %v                   \n\n", numTables, avg)
 }
 
 func calc() {
   for {
     for i := "Calculating";; i += "." {
-      fmt.Printf("\r%s", i)
+      red.Printf("\r%s", i)
       time.Sleep(500 * time.Millisecond)
     }
   }
@@ -61,7 +74,7 @@ func calc() {
 func printWelcome() {
   welcome := []string{"\nWelcome to Colin's Random Table Picker", "Tables are eliminated when number is drawn,", "And put back in the game when their number is drawn again.", "Last number left wins!", "Good Luck.\n"}
   for _, item := range welcome {
-    fmt.Println(item)
+    red.Println(item)
     time.Sleep(400 * time.Millisecond)
   }
 }
@@ -71,12 +84,12 @@ func picker() {
   var compString string
   printWelcome()
   for {
-    fmt.Print("How many tables are playing: ")
+    red.Print("How many tables are playing: ")
     _, err := fmt.Scanf("%d", &tables)
     if err != nil {
       log.Fatal(err)
     }
-    fmt.Print("How many ms would you like to wait between each iteration: ")
+    red.Print("How many ms would you like to wait between each iteration: ")
     _, err2 := fmt.Scanf("%d", &wait)
     if err2 != nil {
       log.Fatal(err2)
@@ -96,13 +109,13 @@ func picker() {
     compString = strconv.Itoa(comp)
     var numX int = 0
     total++
-    fmt.Println("Random number is:", compString)
+    red.Println("Random number is:", compString)
     if tableArray[comp - 1] == compString {
       tableArray[comp - 1] = "x"
     } else {
       tableArray[comp - 1] = compString
     }
-    fmt.Println(tableArray)
+    red.Println(tableArray)
     for _, element := range tableArray {
       if element == "x" {
         numX++
@@ -111,7 +124,7 @@ func picker() {
     if numX >= tables - 1 {
       for _, element := range tableArray {
         if element != "x" {
-          fmt.Println("The lucky winner is", element, "chosen after", total, "rounds.\n")
+          boldRed.Println("The lucky winner is", element, "chosen after", total, "rounds.\n")
           break
         }
       }
