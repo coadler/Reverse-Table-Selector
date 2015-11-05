@@ -19,6 +19,7 @@ func main() {
   fmt.Println("2: Find the avg tries it takes to solve a puzzle\n")
   fmt.Println("Please choose 1 or 2: ")
   fmt.Scanf("%d", &mode)
+  fmt.Println("\n")
   if mode == 1 {
     picker()
   } else if mode == 2 {
@@ -57,7 +58,7 @@ func printWelcome() {
   welcome := []string{"\nWelcome to Colin's Random Table Picker", "Tables are eliminated when number is drawn,", "And put back in the game when their number is drawn again.", "Last number left wins!", "Good Luck.\n"}
   for _, item := range welcome {
     fmt.Println(item)
-    time.Sleep(900 * time.Millisecond)
+    time.Sleep(500 * time.Millisecond)
   }
 }
 
@@ -103,7 +104,7 @@ func picker() {
       end = true
       for _, element := range tableArray {
         if element != "x" {
-          fmt.Println("The lucky winner is", element, "chosen after", total, "rounds.")
+          fmt.Println("The lucky winner is", element, "chosen after", total, "rounds.\n")
           break
         }
       }
