@@ -25,8 +25,7 @@ func main() {
   var mode, numTables, total, tries int = 0, 0, 0, 0
   var avg float32 = 0
   red.Println("\n\tGame modes:\n1: Pick a random table\n2: Find the avg tries it takes to solve a puzzle\n\nPlease choose 1 or 2: ")
-  _, err := fmt.Scanf("%d", &mode)
-  if err != nil {
+  if _, err := fmt.Scanln(&mode); err != nil {
     log.Fatal(err)
   }
 
@@ -34,14 +33,12 @@ func main() {
     picker()
   } else if mode == 2 {
     red.Print("How many tables would you like to calculate for: ")
-    _, err2 := fmt.Scanf("%d", &numTables)
-    if err2 != nil {
-      log.Fatal(err2)
+    if _, err := fmt.Scanln(&numTables); err != nil {
+      log.Fatal(err)
     }
     red.Print("How many times would you like to run the experiment: ")
-    _, err3 := fmt.Scanf("%d", &tries)
-    if err3 != nil {
-      log.Fatal(err3)
+    if _, err := fmt.Scanln(&tries); err != nil {
+      log.Fatal(err)
     }
     fmt.Println("\n")
     go calc()
@@ -85,14 +82,12 @@ func picker() {
   printWelcome()
   for {
     red.Print("How many tables are playing: ")
-    _, err := fmt.Scanf("%d", &tables)
-    if err != nil {
+    if _, err := fmt.Scanln(&tables); err != nil {
       log.Fatal(err)
     }
     red.Print("How many ms would you like to wait between each iteration: ")
-    _, err2 := fmt.Scanf("%d", &wait)
-    if err2 != nil {
-      log.Fatal(err2)
+    if _, err := fmt.Scanln(&wait); err != nil {
+      log.Fatal(err)
     }
     if tables > 0 {
       break
