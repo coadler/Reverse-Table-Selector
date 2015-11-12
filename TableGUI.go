@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/unixpickle/gogui"
-	"math"
 	"os"
 )
 
