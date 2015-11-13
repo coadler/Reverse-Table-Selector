@@ -27,6 +27,6 @@ The game continues until there is only one number left that is not an X
 
 # Upcoming
 
-1: Add a GUI
-2: Fix the channels in the goroutine (learning more with channels)
-3: Anything else suggested
+1: Add a GUI  
+2: Fix the channels in the goroutine (learning more with channels)  
+3: Anything else suggested  
