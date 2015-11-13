@@ -24,3 +24,9 @@ If the number 4 is generated again, it becomes a number again
 The game continues until there is only one number left that is not an X
 
 `[x, x, x, x, 5, x, x, x]`
+
+# Upcoming
+
+1: Add a GUI
+2: Fix the channels in the goroutine (learning more with channels)
+3: Anything else suggested
