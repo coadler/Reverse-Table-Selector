@@ -51,6 +51,7 @@ func main() {
 
 func printAvg(numTables int, total int, avg float32, tries int) {
   defer wg.Done()
+  defer timeTrack(time.Now(), "Finding the avg")
   for i := 1; i <= tries; i++ {
     total += avgFinder(numTables)
   }
@@ -157,6 +158,11 @@ func avgFinder(tables int) int{
     }
   }
   return total
+}
+
+func timeTrack(start time.Time, name string) {
+    elapsed := time.Since(start)
+    red.Printf("%s took %s", name, elapsed)
 }
 
 /*
