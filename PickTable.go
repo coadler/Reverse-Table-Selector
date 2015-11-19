@@ -63,7 +63,7 @@ func picker() {
     } else {
       tableArray[comp - 1] = compString
     }
-    red.Println(tableArray)
+    fmt.Println(tableArray)
     for _, element := range tableArray {
       if element == "x" {
         numX++
