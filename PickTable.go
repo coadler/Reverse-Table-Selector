@@ -5,8 +5,6 @@ import (
     "math/rand"
     "time"
     "strconv"
-    "runtime"
-    "sync"
     "log"
 
     "github.com/fatih/color"
