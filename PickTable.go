@@ -9,7 +9,7 @@ import (
     "sync"
     "log"
 
-    //"github.com/fatih/color"
+    "github.com/fatih/color"
 )
 
 var re *color.Color = color.New(color.FgRed)
