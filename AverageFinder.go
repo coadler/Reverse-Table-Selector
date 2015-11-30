@@ -8,14 +8,8 @@ import (
     "sync"
     "strconv"
     "log"
-
-    "github.com/fatih/color"
 )
 var wg sync.WaitGroup
-
-var re *color.Color = color.New(color.FgRed)
-var red *color.Color = re.Add(color.BgBlack)
-var boldRed *color.Color = red.Add(color.Bold)
 
 func main() {
 
@@ -25,11 +19,11 @@ func main() {
   var numTables, total, tries int = 0, 0, 0
   var avg float32 = 0
 
-  red.Print("How many tables would you like to calculate for: ")
+  fmt.Print("How many tables would you like to calculate for: ")
   if _, err := fmt.Scanln(&numTables); err != nil {
     log.Fatal(err)
   }
-  red.Print("How many times would you like to run the experiment: ")
+  fmt.Print("How many times would you like to run the experiment: ")
   if _, err := fmt.Scanln(&tries); err != nil {
     log.Fatal(err)
   }
@@ -46,13 +40,13 @@ func printAvg(numTables int, total int, avg float32, tries int) {
     total += avgFinder(numTables)
   }
   avg = float32(total)/float32(tries)
-  boldRed.Printf("\rThe avg tries it took to solve %v tables was %v                   \n\n", numTables, avg)
+  fmt.Printf("\rThe avg tries it took to solve %v tables was %v                   \n\n", numTables, avg)
 }
 
 func calc() {
   for {
     for i := "Calculating";; i += "." {
-      red.Printf("\r%s", i)
+      fmt.Printf("\r%s", i)
       time.Sleep(500 * time.Millisecond)
     }
   }
@@ -90,7 +84,7 @@ func avgFinder(tables int) int{
 
 func timeTrack(start time.Time, name string) {
     elapsed := time.Since(start)
-    red.Printf("%s took %s\n", name, elapsed)
+    fmt.Printf("%s took %s\n", name, elapsed)
 }
 
 /*
