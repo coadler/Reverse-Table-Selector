@@ -1,4 +1,4 @@
-package avg
+package main
 
 import (
     "fmt"
@@ -11,7 +11,7 @@ import (
 )
 var wg sync.WaitGroup
 
-func main() {
+func init() {
 
   runtime.GOMAXPROCS(2)
   wg.Add(1)

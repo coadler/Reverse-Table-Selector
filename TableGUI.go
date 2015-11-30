@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func main() {
+func init() {
 	gogui.RunOnMain(openWindow)
 	gogui.Main(&gogui.AppInfo{Name: "Random Table Selector"})
 }

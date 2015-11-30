@@ -1,4 +1,4 @@
-package table
+package main
 
 import (
     "fmt"
@@ -8,7 +8,7 @@ import (
     "log"
 )
 
-func main() {
+func init() {
   picker()
 }
 
