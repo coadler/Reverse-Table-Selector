@@ -11,7 +11,7 @@ import (
 )
 var wg sync.WaitGroup
 
-func init() {
+func main() {
 
   runtime.GOMAXPROCS(2)
   wg.Add(1)
