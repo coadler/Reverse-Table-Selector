@@ -1,1 +1,7 @@
 language: Go
+
+go:
+  - tip
+
+script: PickTable.go
+script: AverageFinder.go
