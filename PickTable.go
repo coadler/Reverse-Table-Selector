@@ -8,7 +8,7 @@ import (
     "log"
 )
 
-func init() {
+func main() {
   picker()
 }
 
@@ -21,7 +21,6 @@ func printWelcome() {
 }
 
 func picker() {
-  defer timeTrack(time.Now(), "Calculating")
   var tables, comp, wait int
   var compString string
   printWelcome()
@@ -72,9 +71,4 @@ func picker() {
     }
     time.Sleep(time.Duration(wait) * time.Millisecond)
   }
-}
-
-func timeTrack(start time.Time, name string) {
-    elapsed := time.Since(start)
-    fmt.Printf("%s took %s\n", name, elapsed)
 }
