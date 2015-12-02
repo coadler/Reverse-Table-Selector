@@ -3,5 +3,5 @@ language: Go
 go:
   - tip
 
-script: PickTable.go
-script: AverageFinder.go
+script: go build PickTable.go
+script: go build AverageFinder.go
