@@ -6,5 +6,5 @@ go:
 install:
   - go get github.com/unixpickle/gogui
 
-script: go build PickTable.go
-script: go build AverageFinder.go
+script: go build main.go
+script: go build TableGUI.go
