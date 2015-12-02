@@ -2,6 +2,9 @@ language: Go
 
 go:
   - tip
+  
+install:
+  - go get github.com/unixpickle/gogui
 
 script: go build PickTable.go
 script: go build AverageFinder.go
