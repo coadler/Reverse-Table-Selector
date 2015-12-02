@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/ThyLeader/Reverse-Table-Selector.svg?branch=master)](https://travis-ci.org/ThyLeader/Reverse-Table-Selector)
-# Reverse-Table-Selector
+# Reverse-Table-Selector [![Build Status](https://travis-ci.org/ThyLeader/Reverse-Table-Selector.svg?branch=master)](https://travis-ci.org/ThyLeader/Reverse-Table-Selector)
 Used to select tables to be graded in Mr. Phelps AP Stats class
 
 I am currently working on a GUI so it is not handled through terminal
